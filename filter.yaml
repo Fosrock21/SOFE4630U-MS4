@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filter-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filter
+  template:
+    metadata:
+      labels:
+        app: filter
+    spec:
+      containers:
+        - name: filter
+          image: $FILTER_IMAGE
+          env:
+            - name: GCP_PROJECT
+              value: "$PROJECT"
+            - name: FILTER_SUB_ID
+              value: "filter-reading-sub"
+            - name: TOPIC_NAME
+              value: "smartmeter"
